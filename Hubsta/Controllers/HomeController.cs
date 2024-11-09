@@ -1,5 +1,6 @@
 using Hubsta.Data;
 using Hubsta.Models;
+using Hubsta.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -25,6 +26,16 @@ namespace Hubsta.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterVM model)
         {
             return View();
         }
