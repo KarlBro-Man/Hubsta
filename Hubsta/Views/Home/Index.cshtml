@@ -22,7 +22,7 @@
                 <div class="container ms-5">
                     <h2>Login</h2>
                     <div class="container border p-3">
-                        <form>
+                        <form asp-action="Login" method="post">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Email address</label>
                                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -33,7 +33,7 @@
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                <label class="form-check-label" for="exampleCheck1">Keep me logged in</label>
                             </div>
                             <a type="submit" class="btn btn-primary">Submit</a>
                             <a asp-action="Register" asp-controller="Home" class="btn btn-secondary">Create an account now</a>
