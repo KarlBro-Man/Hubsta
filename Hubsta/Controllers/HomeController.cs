@@ -41,33 +41,59 @@ namespace Hubsta.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(model.Email!);
 
             if (user == null)
             {
+                string firstName = model.FirstName!;
+                string lastName = model.LastName!;
+
+                string fullName = firstName + lastName;
                 var newUser = new AppUser
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
-                    UserName = model.FirstName + " " + model.LastName,
+                    UserName = model.FirstName,
                     Gender = model.Gender
                 };
-                await _userManager.CreateAsync(newUser, model.Password!);
-                await _userManager.AddToRoleAsync(newUser, "user");
-                await _signInManager.SignInAsync(newUser, isPersistent: false);
+                var result = await _userManager.CreateAsync(newUser, model.Password!);
 
-                return RedirectToAction("Index", "Home");
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(newUser, "user");
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
+
+                    return RedirectToAction("Index", "Home");
+                }
+                
             }
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginVM model)
+        public async Task<IActionResult> Index(LoginVM model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                
+                var user = await _userManager.FindByEmailAsync(model.Email!);
+
+                if (user != null)
+                {
+                   var result = await _signInManager.PasswordSignInAsync(user, model.Password!, false, false);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        return View("Lockout");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    }
+                }
             }
             return View(model);
         }

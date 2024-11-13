@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Hubsta.ViewModels
+@model LoginVM
+@{
     
 }
 
@@ -22,20 +24,24 @@
                 <div class="container ms-5">
                     <h2>Login</h2>
                     <div class="container border p-3">
-                        <form asp-action="Login" method="post">
+                        <form asp-action="Index" method="post">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <label asp-for="Email" class="form-label">Email address</label>
+                                <input asp-for="Email" type="email" class="form-control"  aria-describedby="emailHelp">
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1">
+                                <label asp-for="Password" class="form-label">Password</label>
+                                <input asp-for="Password" type="password" class="form-control">
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
                             <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Keep me logged in</label>
+                                <input asp-for="IsPersistent" type="checkbox" class="form-check-input" >
+                                <label asp-for="IsPersistent" class="form-check-label">Keep me logged in</label>
+                               
                             </div>
-                            <a type="submit" class="btn btn-primary">Submit</a>
+                            <button type="submit" class="btn btn-primary">Login</button>
                             <a asp-action="Register" asp-controller="Home" class="btn btn-secondary">Create an account now</a>
                         </form>
                     </div>

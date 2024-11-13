@@ -14,6 +14,7 @@
             <h1 class="text-center">Hubsta</h1>
             <div class="container border p-3">
                 <form asp-action="Register" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="mb-3">
                         <label asp-for="FirstName" class="form-label">First Name</label>
                         <input asp-for="FirstName" class="form-control" />
