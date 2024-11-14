@@ -41,33 +41,37 @@ namespace Hubsta.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email!);
-
-            if (user == null)
+            if(ModelState.IsValid)
             {
-                string firstName = model.FirstName!;
-                string lastName = model.LastName!;
+                var user = await _userManager.FindByEmailAsync(model.Email!);
 
-                string fullName = firstName + lastName;
-                var newUser = new AppUser
+                if (user == null)
                 {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    UserName = model.FirstName,
-                    Gender = model.Gender
-                };
-                var result = await _userManager.CreateAsync(newUser, model.Password!);
+                    string firstName = model.FirstName!;
+                    string lastName = model.LastName!;
 
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(newUser, "user");
-                    await _signInManager.SignInAsync(newUser, isPersistent: false);
+                    string fullName = firstName + lastName;
+                    var newUser = new AppUser
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Email = model.Email,
+                        UserName = model.Email,
+                        Gender = model.Gender
+                    };
+                    var result = await _userManager.CreateAsync(newUser, model.Password!);
 
-                    return RedirectToAction("Index", "Home");
+                    if (result.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(newUser, "user");
+                        await _signInManager.SignInAsync(newUser, isPersistent: false);
+
+                        return RedirectToAction("Index", "Home");
+                    }
+
                 }
-                
             }
+            
             return View(model);
         }
 
