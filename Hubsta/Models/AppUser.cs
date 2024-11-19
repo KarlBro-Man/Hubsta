@@ -9,6 +9,7 @@ namespace Hubsta.Models
         public string? Gender { get; set; }
         public string? Post {  get; set; }
         public string? Bio { get; set; }
+        public ICollection<Post> Posts { get; set; }
 
     }
 }

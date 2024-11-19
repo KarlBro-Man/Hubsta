@@ -3,6 +3,7 @@ using Hubsta.Models;
 using Hubsta.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using System.Diagnostics;
 
 namespace Hubsta.Controllers
@@ -24,9 +25,11 @@ namespace Hubsta.Controllers
             _roleManager = roleManager;
         }
 
+
         public IActionResult Index()
-        { 
-            return View();
+        {
+
+                return View();         
         }
 
         public IActionResult Privacy()
@@ -66,7 +69,7 @@ namespace Hubsta.Controllers
                         await _userManager.AddToRoleAsync(newUser, "user");
                         await _signInManager.SignInAsync(newUser, isPersistent: false);
 
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Hub");
                     }
 
                 }
@@ -84,10 +87,10 @@ namespace Hubsta.Controllers
 
                 if (user != null)
                 {
-                   var result = await _signInManager.PasswordSignInAsync(user, model.Password!, false, false);
+                   var result = await _signInManager.PasswordSignInAsync(user, model.Password!, model.IsPersistent, false);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Hub");
                     }
                     if (result.IsLockedOut)
                     {
