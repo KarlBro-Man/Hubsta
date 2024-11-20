@@ -28,8 +28,11 @@ namespace Hubsta.Controllers
 
         public IActionResult Index()
         {
-
-                return View();         
+            if (User.Identity!.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Hub");
+            }
+            return View();         
         }
 
         public IActionResult Privacy()

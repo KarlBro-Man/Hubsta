@@ -12,5 +12,6 @@ namespace Hubsta.Data
         }
 
         public DbSet<Post> Posts { get; set; }
+        public DbSet<FriendRelation> FriendRelations { get; set; }
     }
 }

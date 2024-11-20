@@ -16,5 +16,15 @@ namespace Hubsta.Controllers
             List<Post> posts = _context.Posts.ToList();
             return View(posts);
         }
+        public IActionResult FindFriends()
+        {
+            List<AppUser> users = _context.Users.ToList();
+            return View(users);
+        }
+
+        public IActionResult FriendRequests()
+        {
+            return View();
+        }
     }
 }
