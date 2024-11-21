@@ -1,17 +1,22 @@
-﻿@model IEnumerable<AppUser>
+﻿@using Hubsta.ViewModels
+@model FindFriendsVM
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 <h1>Find Friends</h1>
-@foreach(var user in Model)
+@foreach(var user in Model.Users!)
 {
     <div class="container-sm">
         <div class="row">
             <div class="col  position-relative">
                 <p>@user.UserName</p>
-                <a class="position-absolute top-0 end-0">Add as friend</a>
+                <form asp-action="SendRequest" method="post">
+                    <input type="hidden" asp-for="@Model.FriendInvitations!.RequestingUserId" value="@Model.User!.UserId" />
+                    <input type="hidden" asp-for="@Model.FriendInvitations!.RecipientUserId" value="@user.Id" />
+                    <button type="submit" class="btn btn-primary position-absolute top-0 end-0">Add as friend</button>
+                </form>
             </div>
             <div class="col"></div>
         </div>
