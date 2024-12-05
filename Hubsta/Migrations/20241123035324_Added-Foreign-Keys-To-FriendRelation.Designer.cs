@@ -4,6 +4,7 @@ using Hubsta.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hubsta.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241123035324_Added-Foreign-Keys-To-FriendRelation")]
+    partial class AddedForeignKeysToFriendRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,14 +294,12 @@ namespace Hubsta.Migrations
             modelBuilder.Entity("Hubsta.Models.FriendRelation", b =>
                 {
                     b.HasOne("Hubsta.Models.AppUser", "User1")
-                        .WithMany("FriendRelations")
-                        .HasForeignKey("User1Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany()
+                        .HasForeignKey("User1Id");
 
                     b.HasOne("Hubsta.Models.AppUser", "User2")
                         .WithMany()
-                        .HasForeignKey("User2Id")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("User2Id");
 
                     b.Navigation("User1");
 
@@ -367,8 +368,6 @@ namespace Hubsta.Migrations
 
             modelBuilder.Entity("Hubsta.Models.AppUser", b =>
                 {
-                    b.Navigation("FriendRelations");
-
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618

@@ -5,7 +5,7 @@ namespace Hubsta.ViewModels
     public class FriendInvitationVM
     {
         public FriendStatus Status { get; set; }
-        public string? User1Id { get; set; }
-        public string? User2Id { get; set; }
+        public string? RequestingUserId { get; set; }
+        public string? RecipientUserId { get; set; }
     }
 }
